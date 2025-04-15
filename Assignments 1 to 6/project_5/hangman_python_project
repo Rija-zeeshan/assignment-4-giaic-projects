@@ -1,0 +1,50 @@
+import random
+
+# List of words
+words = ['python', 'java', 'kotlin', 'javascript']
+word = random.choice(words)
+guessed_letters = set()
+attempts = 6
+
+print("Welcome to H A N G M A N game!")
+
+# Initial display of word
+displayed_word = ["_" for _ in word]
+print(" ".join(displayed_word))
+
+while attempts > 0:
+    guess = input("Input a letter: ").lower()
+
+    # Validate input
+    if len(guess) != 1 or not guess.isalpha():
+        print("You should input a single letter")
+        continue
+
+    # Check if letter is already guessed
+    if guess in guessed_letters:
+        print("You've already guessed this letter. Choose another one.")
+        continue
+
+    # Add the guessed letter to the set
+    guessed_letters.add(guess)
+
+    if guess in word:
+        print("Correct guess!")
+    else:
+        attempts -= 1
+        print(f"Wrong guess! {attempts} attempts left.")
+
+    # Update displayed word
+    for i in range(len(word)):
+        if word[i] in guessed_letters:
+            displayed_word[i] = word[i]
+
+    print(" ".join(displayed_word))
+
+    # Check if player has won
+    if "_" not in displayed_word:
+        print("Congratulations! You guessed the word!")
+        print("You survived!")
+        break
+else:
+    print(f"Game over! The correct word was: {word}")
